@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../context/cart-context";
@@ -27,6 +27,7 @@ export const CartPage = () => {
   const [checkoutStage, setCheckoutStage] = useState<
     "starting" | "video" | "clearing" | "success" | null
   >(null);
+  const checkoutVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const hasItems = items.length > 0;
   const currency = items[0]?.currency ?? "INR";
@@ -83,6 +84,16 @@ export const CartPage = () => {
       if (timer) window.clearTimeout(timer);
     };
   }, [checkoutStage, clearCart]);
+
+  const handleVideoReady = () => {
+    const video = checkoutVideoRef.current;
+    if (!video) return;
+    video.muted = false;
+    const playAttempt = video.play();
+    if (playAttempt) {
+      playAttempt.catch(() => null);
+    }
+  };
   const summaryDetails = (
     <>
       <div className={styles.couponRow}>
@@ -326,10 +337,14 @@ export const CartPage = () => {
                   <>
                     <div className={styles.videoFrame}>
                       <video
+                        ref={checkoutVideoRef}
                         src={checkoutVideo}
                         autoPlay
                         controls
+                        muted={false}
+                        preload="auto"
                         playsInline
+                        onLoadedData={handleVideoReady}
                       />
                     </div>
                     <p className={styles.videoHint}>
