@@ -1,0 +1,115 @@
+.card {
+  background: var(--surface);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: cardEnter 0.6s ease both;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 48px -32px rgba(51, 35, 23, 0.6);
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.media {
+  position: relative;
+  background: #f7efe8;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.5), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .media::after {
+  opacity: 1;
+}
+
+.image {
+  border-radius: 16px;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 1000px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.badgeDanger {
+  background: #b85c5c;
+}
+
+.body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta {
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.title {
+  font-size: 18px;
+}
+
+.sub {
+  font-size: 14px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.price {
+  font-weight: 600;
+}
+
+.addButton {
+  min-width: 120px;
+}
